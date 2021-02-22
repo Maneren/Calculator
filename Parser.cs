@@ -31,18 +31,17 @@ namespace Calculator
       return result;
     }
 
-    bool IsInTokenTypeArray(TokenType[] array, TokenType value)
+    bool IsInArray<T>(T[] array, T value)
     {
-      return Array.Exists(array, x => x == value);
+      return Array.Exists(array, x => x == null ? false : x.Equals(value));
     }
-
 
     INode Expression()
     {
       INode result = Term();
       TokenType[] validOperators = { TokenType.Plus, TokenType.Minus };
 
-      while (current != null && IsInTokenTypeArray(validOperators, current.type))
+      while (current != null && IsInArray(validOperators, current.type))
       {
         var token = current;
         Move();
@@ -59,7 +58,7 @@ namespace Calculator
       INode result = Factor();
       TokenType[] validOperators = { TokenType.Multiply, TokenType.Divide };
 
-      while (current != null && IsInTokenTypeArray(validOperators, current.type))
+      while (current != null && IsInArray(validOperators, current.type))
       {
         var token = current;
         Move();
